@@ -123,3 +123,19 @@ Usage Example
     .on('maxTasks', function(amount) {
         console.log('max tasks running: ' + amount);
     });
+
+Things you should know
+=======
+
+Cpu usage is calculated in the following manner:
+
+    var os      = require('os'),
+        cpus    = os.cpus(),
+        perc    = 0;
+        
+    cpus.forEach(function(cpu) {
+        perc += (cpu.times.user + cpu.times.sys + cpu.times.nice) / cpu.times.idle * 100;
+    });
+    perc = perc / cpus.length;
+    
+    console.log('cpu usage percentage: ' + perc);
