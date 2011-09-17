@@ -97,7 +97,7 @@ Usage Example
             /* check next when initialized */
             checkNext();            
         
-        }, 'task' + i);
+        });
     }
     
     /* listen to some useful events */
