@@ -7,7 +7,7 @@ Install
 =======
     npm install tasker
 
-API: tasker.create(options)
+API: require('tasker').create(options)
 =======
 
 Creates and returns a new tasker, which is an EventEmitter. Options is an object with the following properties:
@@ -17,10 +17,12 @@ Creates and returns a new tasker, which is an EventEmitter. Options is an object
 * maxTasks: number of tasks that can run simultaneously. If this limit is exceeded, new tasks will be queue until one or more tasks have finished.
 * pollRate: polling rate in milliseconds (defaults to 500) at which resources will be checked when tasks currently in queue need to be executed as soon as resource limits are no longer being exceeded.
 
-API: planner (returned by tasker.create)
+All options are optional. So you can mix and match resource limits as you like. Eg., you can only limit to 80% memory usage. Or, you can limit to both 80% memory and 90% processor power utilization. This means that if any of these resource limits are exceeded, new tasks will be queued.
+
+API: tasker (returned by require('tasker').create(options))
 =======
 
-planner.addTask(cb)
+tasker.addTask(cb)
 -------
 cb is a function which is called immediately if no queue is necessary, or later when this task first needs to be queued:
 
@@ -40,42 +42,42 @@ You must call onDone when the task has ended. A task has ended when it succeeded
 
 This method returns a unique identifier (an integer) appointed to this task, like setTimeout does. 
 
-planner.removeTask(id)
+tasker.removeTask(id)
 ------
 Removes the task represented by the given identifier from the queue. Note that tasks are removed from the queue when they are executed. Thus, if you wish to cancel a running task, you need to do so manually. This is outside the scope of tasker.
 
-planner.destruct()
+tasker.destruct()
 ------
-Destructs the planner, removing all event listeners and flushing the queue.
+Destructs the tasker, removing all event listeners and flushing the queue.
 
-planner.getTasksRunning()
+tasker.getTasksRunning()
 ------
 Returns the amount of currently running tasks.
 
-planner.getTasksQueued()
+tasker.getTasksQueued()
 ------
 Returns the amount of currently queued tasks.
 
-All planner functions are chainable.
+All tasker functions are chainable.
 
 Planner events:
 ------
 
-* planner.on('newTask', function(id) { }) : emitted when a new task has been added
-* planner.on('taskStarted' function(id) { }) : emitted when a new task has started
-* planner.on('taskQueued' function(id) { }) : emitted when a new task has been added to the queue
-* planner.on('taskDone' function(id) { }) : emitted when a new task has finished
-* planner.on('maxCpu' function(currentCpu) { }) : emitted when max cpu boundary has been exceeded
-* planner.on('maxMem' function(currentMem) { }) : emitted when max mem boundary has been exceeded
-* planner.on('maxTasks' function(currentAmount) { }) : emitted when max simultaneous tasks boundary has been exceeded
+* tasker.on('newTask', function(id) { }) : emitted when a new task has been added
+* tasker.on('taskStarted' function(id) { }) : emitted when a new task has started
+* tasker.on('taskQueued' function(id) { }) : emitted when a new task has been added to the queue
+* tasker.on('taskDone' function(id) { }) : emitted when a new task has finished
+* tasker.on('maxCpu' function(currentCpu) { }) : emitted when max cpu boundary has been exceeded
+* tasker.on('maxMem' function(currentMem) { }) : emitted when max mem boundary has been exceeded
+* tasker.on('maxTasks' function(currentAmount) { }) : emitted when max simultaneous tasks boundary has been exceeded
 
 Usage Example
 ======
 
     var exec = require('child_process').exec,
-        planner;
+        tasker;
 
-    planner = require('tasker').create({
+    tasker = require('tasker').create({
         maxCpu: 90 /* queue new tasks when cpu is used over 90% */
       , maxMem: 80 /* queue new tasks when more than 80% of total memory is consumed */
       , maxTasks: 200 /* queue new tasks when more than 200 simultaneous tasks are running */
@@ -85,7 +87,7 @@ Usage Example
     /* spawn 500 processes planned such that we never use too many resources */
     var child;
     for (var i = 0, il = 500; i < il; i++) {
-        planner.addTask(function(onDone, checkNext) {
+        tasker.addTask(function(onDone, checkNext) {
         
             /* create and run process */
             child = exec('du -a /', function (error, stdout, stderr) {
@@ -101,7 +103,7 @@ Usage Example
     }
     
     /* listen to some useful events */
-    planner
+    tasker
     .on('newTask', function(id) {
         console.log('new task created: ' + id);
     })
