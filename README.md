@@ -72,22 +72,54 @@ Planner events:
 Usage Example
 ======
 
-    var planner = require('tasker').create({
+    var exec = require('child_process').exec,
+        planner;
+
+    planner = require('tasker').create({
         maxCpu: 90 /* queue new tasks when cpu is used over 90% */
       , maxMem: 80 /* queue new tasks when more than 80% of total memory is consumed */
       , maxTasks: 200 /* queue new tasks when more than 200 simultaneous tasks are running */
       , pollRate: 500 /* if are queue is populated, check for resource usage changes every 500ms */
     });
     
-    /* spawn 500 processes */
+    /* spawn 500 processes planned such that we never use too many resources */
+    var child;
     for (var i = 0, il = 500; i < il; i++) {
         planner.addTask(function(onDone, checkNext) {
         
             /* create and run process */
+            child = exec('cat *.js bad_file | wc -l', function (error, stdout, stderr) {
+                
+                /* run onDone on end (success or failure) */
+                onDone();
+            });
             
             /* check next when initialized */
-            
-            /* run onDone on end (success or failure) */
+            checkNext();            
         
         }, 'task' + i);
     }
+    
+    /* listen to some useful events */
+    planner
+    .on('newTask', function(name) {
+        console.log('new task created: ' + name);
+    })
+    .on('taskStarted', function(name) {
+        console.log('new task started: ' + name);
+    })
+    .on('taskQueued', function(name) {
+        console.log('new task queued: ' + name);
+    })
+    .on('taskDone', function(name) {
+        console.log('task finished: ' + name);
+    })
+    .on('maxCpu', function(cpu) {
+        console.log('cpu limit exceeded: ' + cpu);
+    })
+    .on('maxMem', function(mem) {
+        console.log('mem limit exceeded: ' + mem);
+    })
+    .on('maxTasks', function(amount) {
+        console.log('max tasks running: ' + amount);
+    });
