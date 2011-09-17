@@ -133,9 +133,8 @@ Cpu usage is calculated in the following manner:
         prevTimes   = getCpuTimes();
     
     function getCpuTimes() {
-        var cpus    = os.cpus(),
-            cpusl   = cpus.length,
-            times   = {
+        var cpus = os.cpus(),
+            times = {
                 user: 0
               , sys : 0
               , nice: 0
@@ -149,24 +148,20 @@ Cpu usage is calculated in the following manner:
             times.idle += cpu.times.idle;
         });
         
-        times.user = times.user / cpusl;
-        times.sys = times.sys / cpusl;
-        times.nice = times.nice / cpusl;
-        times.idle = times.idle / cpusl;
-        
         return times;
     }
     
     function getCpuUsage() {
-        var times   = getCpuTimes(),
-            user    = prevTimes.user - times.user,
-            sys     = prevTimes.sys - times.sys,
-            nice    = prevTimes.nice - times.nice,
-            idle    = prevTimes.idle - times.idle;
+        var times = getCpuTimes(),
+            user = prevTimes.user - times.user,
+            sys = prevTimes.sys - times.sys,
+            nice = prevTimes.nice - times.nice,
+            idle = prevTimes.idle - times.idle,
+            usage = user + sys + nice;
             
         prevTimes = times;
         
-        return (user + sys + nice) / idle * 100;    
+        return usage / (usage + idle) * 100;
     }
     
     setInterval(function() {
