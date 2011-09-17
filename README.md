@@ -139,3 +139,10 @@ Cpu usage is calculated in the following manner:
     perc = perc / cpus.length;
     
     console.log('cpu usage percentage: ' + perc);
+    
+ Memory usage is calculated like so:
+ 
+    var os      = require('os');
+        perc    = os.freemem() / os.totalmem() * 100;
+        
+    console.log('memory usage percentage: ' + perc);
