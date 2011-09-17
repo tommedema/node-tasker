@@ -33,6 +33,8 @@ cb is a function which is called immediately if no queue is necessary, or later 
 
 You must call checkNext when your task has initialized. This ensures that your system's resource usage is inspected while your task has been setup (eg. increase of RAM by spawning a child process).
 
+You must call onDone when the task has ended. A task has ended when it succeeded or failed.
+
 Name is optional. It is only needed if you wish to remove tasks from the queue.
 
 planner.removeTask(name)
@@ -66,3 +68,26 @@ Planner events:
 * planner.on('maxCpu' function(currentCpu) { }) : emitted when max cpu boundary has been exceeded
 * planner.on('maxMem' function(currentMem) { }) : emitted when max mem boundary has been exceeded
 * planner.on('maxTasks' function(currentAmount) { }) : emitted when max simultaneous tasks boundary has been exceeded
+
+Usage Example
+======
+
+    var planner = require('tasker').create({
+        maxCpu: 90 /* queue new tasks when cpu is used over 90% */
+      , maxMem: 80 /* queue new tasks when more than 80% of total memory is consumed */
+      , maxTasks: 200 /* queue new tasks when more than 200 simultaneous tasks are running */
+      , pollRate: 500 /* if are queue is populated, check for resource usage changes every 500ms */
+    });
+    
+    /* spawn 500 processes */
+    for (var i = 0, il = 500; i < il; i++) {
+        planner.addTask(function(onDone, checkNext) {
+        
+            /* create and run process */
+            
+            /* check next when initialized */
+            
+            /* run onDone on end (success or failure) */
+        
+        }, 'task' + i);
+    }
