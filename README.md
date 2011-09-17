@@ -20,7 +20,7 @@ Creates and returns a new tasker, which is an EventEmitter. Options is an object
 API: planner (returned by tasker.create)
 =======
 
-planner.addTask(cb, name)
+planner.addTask(cb)
 -------
 cb is a function which is called immediately if no queue is necessary, or later when this task first needs to be queued:
 
@@ -38,11 +38,11 @@ You must call checkNext when your task has initialized. This ensures that your s
 
 You must call onDone when the task has ended. A task has ended when it succeeded or failed.
 
-Name is optional. It is only needed if you wish to remove tasks from the queue.
+This method returns a unique identifier (an integer) appointed to this task, like setTimeout does. 
 
-planner.removeTask(name)
+planner.removeTask(id)
 ------
-Removes the task represented by the given name (identifier) from the queue. Note that tasks are removed from the queue when they are executed. Thus, if you wish to cancel a running task, you need to do so manually. This is outside the scope of tasker.
+Removes the task represented by the given identifier from the queue. Note that tasks are removed from the queue when they are executed. Thus, if you wish to cancel a running task, you need to do so manually. This is outside the scope of tasker.
 
 planner.destruct
 ------
@@ -64,10 +64,10 @@ All planner functions are chainable.
 Planner events:
 ------
 
-* planner.on('newTask', function(name) { }) : emitted when a new task has been added
-* planner.on('taskStarted' function(name) { }) : emitted when a new task has started
-* planner.on('taskQueued' function(name) { }) : emitted when a new task has been added to the queue
-* planner.on('taskDone' function(name) { }) : emitted when a new task has finished
+* planner.on('newTask', function(id) { }) : emitted when a new task has been added
+* planner.on('taskStarted' function(id) { }) : emitted when a new task has started
+* planner.on('taskQueued' function(id) { }) : emitted when a new task has been added to the queue
+* planner.on('taskDone' function(id) { }) : emitted when a new task has finished
 * planner.on('maxCpu' function(currentCpu) { }) : emitted when max cpu boundary has been exceeded
 * planner.on('maxMem' function(currentMem) { }) : emitted when max mem boundary has been exceeded
 * planner.on('maxTasks' function(currentAmount) { }) : emitted when max simultaneous tasks boundary has been exceeded
@@ -105,17 +105,17 @@ Usage Example
     
     /* listen to some useful events */
     planner
-    .on('newTask', function(name) {
-        console.log('new task created: ' + name);
+    .on('newTask', function(id) {
+        console.log('new task created: ' + id);
     })
-    .on('taskStarted', function(name) {
-        console.log('new task started: ' + name);
+    .on('taskStarted', function(id) {
+        console.log('new task started: ' + id);
     })
-    .on('taskQueued', function(name) {
-        console.log('new task queued: ' + name);
+    .on('taskQueued', function(id) {
+        console.log('new task queued: ' + id);
     })
-    .on('taskDone', function(name) {
-        console.log('task finished: ' + name);
+    .on('taskDone', function(id) {
+        console.log('task finished: ' + id);
     })
     .on('maxCpu', function(cpu) {
         console.log('cpu limit exceeded: ' + cpu);
