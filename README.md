@@ -57,7 +57,7 @@ Getters/setters:
 * planner.setMaxMem(percentage) : sets new max mem setting
 * planner.getMaxTasks() : returns current max simultaneous tasks setting
 * planner.setMaxTasks(amount) : sets new max simultaneous tasks setting
-* planner.getTasksAmount() : returns current amount of simultaneously running tasks
+* planner.getTasksRunning() : returns current amount of simultaneously running tasks
 
 All planner functions are chainable.
 
