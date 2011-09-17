@@ -129,16 +129,49 @@ Things you should know
 
 Cpu usage is calculated in the following manner:
 
-    var os      = require('os'),
-        cpus    = os.cpus(),
-        perc    = 0;
-        
-    cpus.forEach(function(cpu) {
-        perc += (cpu.times.user + cpu.times.sys + cpu.times.nice) / cpu.times.idle * 100;
-    });
-    perc = perc / cpus.length;
+    var os          = require('os'),
+        prevTimes   = getCpuTimes();
     
-    console.log('cpu usage percentage: ' + perc);
+    function getCpuTimes() {
+        var cpus    = os.cpus(),
+            cpusl   = cpus.length,
+            times   = {
+                user: 0
+              , sys : 0
+              , nice: 0
+              , idle: 0
+            };
+            
+        cpus.forEach(function(cpu) {
+            times.user += cpu.times.user;
+            times.sys += cpu.times.sys;
+            times.nice += cpu.times.nice;
+            times.idle += cpu.times.idle;
+        });
+        
+        times.user = times.user / cpusl;
+        times.sys = times.sys / cpusl;
+        times.nice = times.nice / cpusl;
+        times.idle = times.idle / cpusl;
+        
+        return times;
+    }
+    
+    function getCpuUsage() {
+        var times   = getCpuTimes(),
+            user    = prevTimes.user - times.user,
+            sys     = prevTimes.sys - times.sys,
+            nice    = prevTimes.nice - times.nice,
+            idle    = prevTimes.idle - times.idle;
+            
+        prevTimes = times;
+        
+        return (user + sys + nice) / idle * 100;    
+    }
+    
+    setInterval(function() {
+        console.log('cpu usage percentage: ' + getCpuUsage());
+    }, 1000);
     
  Memory usage is calculated like so:
  
