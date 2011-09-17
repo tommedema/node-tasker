@@ -48,16 +48,13 @@ planner.destruct
 ------
 Destructs the planner, removing all event listeners and flushing the queue.
 
-Getters/setters:
--------
+planner.getTasksRunning
+------
+Returns the amount of currently running tasks.
 
-* planner.getMaxCpu() : returns current max cpu setting
-* planner.setMaxCpu(percentage) : sets new max cpu setting
-* planner.getMaxMem() : returns current max mem setting
-* planner.setMaxMem(percentage) : sets new max mem setting
-* planner.getMaxTasks() : returns current max simultaneous tasks setting
-* planner.setMaxTasks(amount) : sets new max simultaneous tasks setting
-* planner.getTasksRunning() : returns current amount of simultaneously running tasks
+planner.getTasksQueued
+------
+Returns the amount of currently queued tasks.
 
 All planner functions are chainable.
 
