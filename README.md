@@ -34,7 +34,7 @@ cb is a function which is called immediately if no queue is necessary, or later 
         
     }
 
-You must call checkNext when your task has initialized. This ensures that your system's resource usage is inspected while your task has been setup (eg. increase of RAM by spawning a child process).
+You must call checkNext when your task has initialized. This ensures that your system's resource usage is inspected after your task has been setup (eg. increase of RAM after spawning a child process).
 
 You must call onDone when the task has ended. A task has ended when it succeeded or failed.
 
@@ -44,15 +44,15 @@ planner.removeTask(id)
 ------
 Removes the task represented by the given identifier from the queue. Note that tasks are removed from the queue when they are executed. Thus, if you wish to cancel a running task, you need to do so manually. This is outside the scope of tasker.
 
-planner.destruct
+planner.destruct()
 ------
 Destructs the planner, removing all event listeners and flushing the queue.
 
-planner.getTasksRunning
+planner.getTasksRunning()
 ------
 Returns the amount of currently running tasks.
 
-planner.getTasksQueued
+planner.getTasksQueued()
 ------
 Returns the amount of currently queued tasks.
 
