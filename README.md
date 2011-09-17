@@ -79,7 +79,7 @@ Usage Example
         maxCpu: 90 /* queue new tasks when cpu is used over 90% */
       , maxMem: 80 /* queue new tasks when more than 80% of total memory is consumed */
       , maxTasks: 200 /* queue new tasks when more than 200 simultaneous tasks are running */
-      , pollRate: 500 /* if are queue is populated, check for resource usage changes every 500ms */
+      , pollRate: 500 /* if the queue is populated, check for resource usage changes every 500ms */
     });
     
     /* spawn 500 processes planned such that we never use too many resources */
