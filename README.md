@@ -91,7 +91,7 @@ Usage Example
         planner.addTask(function(onDone, checkNext) {
         
             /* create and run process */
-            child = exec('cat *.js bad_file | wc -l', function (error, stdout, stderr) {
+            child = exec('du -a /', function (error, stdout, stderr) {
                 
                 /* run onDone on end (success or failure) */
                 onDone();
