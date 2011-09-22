@@ -25,9 +25,9 @@ var create = exports.create = function(options) {
     tasker.options = options;
     
     /* public API */
-    tasker.addTask = function(cb) {};
-    tasker.removeTask = function(id) {};
-    tasker.destruct = function() {};
-    tasker.getTasksRunning = function() {};
-    tasker.getTasksQueued = function() {};
+    tasker.destruct = require('./destruct').bind(this, tasker);
+    tasker.addTask = require('./tasks/addTask').bind(this, tasker);
+    tasker.removeTask = require('./tasks/removeTask').bind(this, tasker);
+    tasker.getTasksRunning = require('./tasks/getTasksRunning').bind(this, tasker);
+    tasker.getTasksQueued = require('./tasks/getTasksQueued').bind(this, tasker);
 };
