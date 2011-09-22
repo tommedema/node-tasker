@@ -4,4 +4,6 @@
 
 module.exports = function(tasker) {
     
+    /* return amount of tasks running */
+    
 };
