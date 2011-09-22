@@ -24,7 +24,7 @@ API: tasker (returned by require('tasker').create(options))
 
 tasker.addTask(cb)
 -------
-cb is a function which is called immediately if no queue is necessary, or later when this task first needs to be queued:
+cb is a function which is called as soon as this task is to be executed:
 
     function(onDone, checkNext) {
         
@@ -35,12 +35,14 @@ cb is a function which is called immediately if no queue is necessary, or later 
         //when task is done, inform tasker by calling onDone();
         
     }
+    
+A task will be added to the end of the queue as soon as it is added (queue functions as first in first out FIFO).
 
 You must call checkNext when your task has initialized. This ensures that your system's resource usage is inspected after your task has been setup (eg. increase of RAM after spawning a child process).
 
 You must call onDone when the task has ended. A task has ended when it succeeded or failed.
 
-This method returns a unique identifier (an integer) appointed to this task, like setTimeout does. 
+This method returns a unique identifier (an integer) appointed to this task, just like setTimeout does. 
 
 tasker.removeTask(id)
 ------
