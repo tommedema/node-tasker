@@ -1,6 +1,9 @@
 node-tasker (system resource based task queue)
 =============
 
+NOTE: CURRENTLY IN ALPHA DEVELOPMENT. DO NOT USE.
+=============
+
 Tasker allows you to queue simultaneous and asynchronous tasks based on the system's CPU usage, and/or memory usage and/or the amount of tasks running simultaneously.
 
 Install
