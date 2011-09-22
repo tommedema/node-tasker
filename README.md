@@ -15,7 +15,7 @@ API: require('tasker').create(options)
 
 Creates and returns a new tasker, which is an EventEmitter. Options is an object with the following properties:
 
-* maxCpu: percentage (0-100) of processing power used in the last 10 seconds of total processing power available. If limit is exceeded, new tasks will be queued until resource is available again.
+* maxCpu: percentage (0-100) of processing power used in the last amount of milliseconds equal to the set pollRate (defaults to 500) of total processing power available. If limit is exceeded, new tasks will be queued until resource is available again.
 * maxMem: percentage (0-100) of memory of total memory available. If this limit is exceeded, new tasks will be queued until resource is available again.
 * maxTasks: number of tasks that can run simultaneously. If this limit is exceeded, new tasks will be queue until one or more tasks have finished.
 * pollRate: polling rate in milliseconds (defaults to 500) at which resources will be checked when tasks currently in queue need to be executed as soon as resource limits are no longer being exceeded.
