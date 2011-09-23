@@ -1,7 +1,7 @@
 var queue = require('./queue');
 
 /* adds given task to the queue
- * returns a unique identifier for this task
+ * returns the task that was added
  * 
  * taskCb is expected to have the following format: function(onDone, checkNext) {}
  * where onDone is called when the task has completed or failed,
@@ -12,20 +12,27 @@ var addTask = exports.addTask = function(taskCb) {
     var tasker = this;
     
     /* add new task to queue, returns id */
-    var id = tasker.queue.addTask(taskCb);
+    var task = tasker.queue.addTask(taskCb);
+    
+    /* task queued */
+    tasker.emit('taskQueued', task);
     
     /* return id of task */
-    return id;
+    return task;
 };
 
 /* removes given task from the queue */
-var removeTask = exports.removeTask = function(taskId) {
+var removeTask = exports.removeTask = function(task) {
     
     /* function is part of Tasker prototype */
     var tasker = this;
     
     /* remove by id */
-    tasker.queue.removeTask(taskId);
+    if (tasker.queue.removeTask(task)) {
+        
+        /* task removed */
+        tasker.emit('taskRemoved', task);
+    }
 };
 
 /* Task object */

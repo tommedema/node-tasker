@@ -18,18 +18,29 @@ var TaskQueue = exports.TaskQueue = function() {
     this.newTaskId = 0;
 };
 
-/* adds task to the queue, returns id */
+/* adds task to the queue, returns task */
 TaskQueue.prototype.addTask = function(cb) {
-    var id = this.generateTaskId();
-    this.taskList.push(new tasks.Task(id, cb));
-    return id;
+    
+    /* create task */
+    var id      = this.generateTaskId(),
+        task    = new tasks.Task(id, cb);
+    
+    /* add to list */
+    this.taskList.push(task);
+    
+    /* return task */
+    return task;
 };
 
-/* removes a task from the queue, by id */
-TaskQueue.prototype.removeTask = function(id) {
-    this.taskList = this.taskList.filter(function(item) {
-        return (item.id !== id);
-    });
+/* removes a task from the queue, returns removed task or null */
+TaskQueue.prototype.removeTask = function(task) {
+    for (var i = 0, il = this.taskList.length; i < il; i++) {
+        if (this.taskList[i] === task) {
+            taskList.splice(i, 1);
+            return task;
+        }
+    }
+    return null;
 };
 
 /* generates unique id for a task */
