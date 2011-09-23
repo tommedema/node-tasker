@@ -13,9 +13,9 @@ var create = exports.create = function(options) {
     
     /* validate input */
     if (!options.maxCpu && !options.maxMem && !options.maxTasks) throw new Error('Not a single resource limit has been set.');
-    if (options.maxCpu && typeof(options.maxCpu !== 'number')) throw new Error('maxCpu is set but not a number');
-    if (options.maxMem && typeof(options.maxMem !== 'number')) throw new Error('maxMem is set but not a number');
-    if (options.maxTasks && typeof(options.maxTasks !== 'number')) throw new Error('maxTasks is set but not a number');
+    if (options.maxCpu && (typeof(options.maxCpu !== 'number') || options.maxCpu > 100 || options.maxCpu < 0)) throw new Error('maxCpu is set but not a valid number (0-100)');
+    if (options.maxMem && (typeof(options.maxMem !== 'number') || options.maxMem > 100 || options.maxMem < 0)) throw new Error('maxMem is set but not a number (0-100)');
+    if (options.maxTasks && (typeof(options.maxTasks !== 'number') || options.maxTasks < 1)) throw new Error('maxTasks is set but not a number (1 - Infinity)');
     
     /* set defaults */
     if (!options.pollRate) options.pollRate = defaultPollRate;
@@ -25,9 +25,9 @@ var create = exports.create = function(options) {
     tasker.options = options;
     
     /* public API */
-    tasker.destruct = require('./destruct').bind(this, tasker);
-    tasker.addTask = require('./tasks/addTask').bind(this, tasker);
-    tasker.removeTask = require('./tasks/removeTask').bind(this, tasker);
-    tasker.getTasksRunning = require('./tasks/getTasksRunning').bind(this, tasker);
-    tasker.getTasksQueued = require('./tasks/getTasksQueued').bind(this, tasker);
+    tasker.destruct = function() {};
+    tasker.addTask = function() {};
+    tasker.removeTask = function() {};
+    tasker.getTasksRunning = function() {};
+    tasker.getTasksQueued = function() {};
 };
