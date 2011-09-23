@@ -19,6 +19,7 @@ var create = exports.create = function(options) {
     if (options.maxCpu && (typeof(options.maxCpu !== 'number') || options.maxCpu > 100 || options.maxCpu < 0)) throw new Error('maxCpu is set but not a valid number (0-100)');
     if (options.maxMem && (typeof(options.maxMem !== 'number') || options.maxMem > 100 || options.maxMem < 0)) throw new Error('maxMem is set but not a number (0-100)');
     if (options.maxTasks && (typeof(options.maxTasks !== 'number') || options.maxTasks < 1)) throw new Error('maxTasks is set but not a number (1 - Infinity)');
+    if (options.pollRate && (typeof(options.pollRate !== 'number') || options.pollRate < 0)) throw new Error('pollRate must be a valid number > 0');
     
     /* set defaults */
     if (!options.pollRate) options.pollRate = defaultPollRate;
