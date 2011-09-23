@@ -1,4 +1,5 @@
-var os = require('os');
+var os  = require('os'),
+    cpu = require('./cpu');
 
 /* returns amount of tasks currently running */
 var getTasksRunning = exports.getTasksRunning = function() {
@@ -93,7 +94,7 @@ TaskScheduler.prototype.shouldExecTask = function() {
 
 /* returns cpu usage as a percentage of total processing power (0-100) */
 TaskScheduler.prototype.getCpuUsage = function() {
-    //TODO
+    return cpu.getCpuUsage();
 };
 
 /* returns memory usage as a percentage of total memory available (0-100) */
