@@ -32,7 +32,7 @@ var Tasker = exports.Tasker = function(options) {
     this.options      = options;
     this.queue        = new queue.TaskQueue();
     this.tasksRunning = 0;
-    this.scheduler    = new scheduler.TaskScheduler(tasker);
+    this.scheduler    = new scheduler.TaskScheduler(this);
 };
 
 /* build prototype, inheriting from EventEmitter */
