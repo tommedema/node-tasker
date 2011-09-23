@@ -32,6 +32,7 @@ var Tasker = exports.Tasker = function(options) {
     tasker.options      = options;
     tasker.queue        = new queue.TaskQueue();
     tasker.tasksRunning = 0;
+    tasker.scheduler    = new scheduler.TaskScheduler(tasker);
 };
 
 /* build prototype, inheriting from EventEmitter */
