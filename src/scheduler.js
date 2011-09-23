@@ -117,6 +117,7 @@ TaskScheduler.prototype.executeTask = function(task, checkNext, onDone) {
     };
     
     /* execute task */
+    scheduler.runningTasks++;
     task.cb.apply(this, checkNext, onDone);
     
     /* task started */
