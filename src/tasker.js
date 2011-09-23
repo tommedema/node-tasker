@@ -31,7 +31,7 @@ var Tasker = exports.Tasker = function(options) {
     /* set options and initialize state */
     this.options      = options;
     this.queue        = new queue.TaskQueue();
-    this.tasksRunning = 0;
+    this.tasksRunning = 0;    
     this.scheduler    = new scheduler.TaskScheduler(this);
 };
 
