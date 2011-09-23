@@ -6,21 +6,17 @@
 
 /* references and default settings */
 var EventEmitter    = require('eventemitter2'),
+    util            = require('util'),
     tasks           = require('./tasks'),
     queue           = require('./queue'),
     scheduler       = require('./scheduler'),
     defaultPollRate = 500;
 
-/* create Tasker prototype */
-var Tasker = exports.Tasker = Object.create(EventEmitter.prototype);
-    Tasker.destruct = destructTasker;
-    Tasker.addTask = tasks.addTask;
-    Tasker.removeTask = tasks.removeTask;
-    Tasker.getTasksRunning = scheduler.getTasksRunning;
-    Tasker.getTasksQueued = queue.getTasksQueued;
-
-/* creates a new tasker */
-var create = exports.create = function(options) {
+/* the Tasker object */
+var Tasker = exports.Tasker = function(options) {
+    
+    /* inherit from EventEmitter */
+    EventEmitter.call(this);
     
     /* validate input */
     if (!options.maxCpu && !options.maxMem && !options.maxTasks) throw new Error('Not a single resource limit has been set.');
@@ -32,16 +28,16 @@ var create = exports.create = function(options) {
     /* set defaults */
     if (!options.pollRate) options.pollRate = defaultPollRate;
     
-    /* create tasker */
-    var tasker = Object.create(Tasker);
-    
     /* set options and create empty state */
     tasker.options  = options;
     tasker.state    = {};
-    
-    /* return */
-    return tasker;
 };
+util.inherits(Tasker, EventEmitter);
+Tasker.prototype.destruct = destructTasker;
+Tasker.prototype.addTask = tasks.addTask;
+Tasker.prototype.removeTask = tasks.removeTask;
+Tasker.prototype.getTasksRunning = scheduler.getTasksRunning;
+Tasker.prototype.getTasksQueued = queue.getTasksQueued;
 
 /* destructs the given tasker */
 function destructTasker() {

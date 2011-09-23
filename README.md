@@ -10,7 +10,7 @@ Install
 =======
     npm install tasker
 
-API: require('tasker').create(options)
+API: new require('tasker').Tasker(options);
 =======
 
 Creates and returns a new tasker, which is an EventEmitter. Options is an object with the following properties:
@@ -22,7 +22,7 @@ Creates and returns a new tasker, which is an EventEmitter. Options is an object
 
 All options are optional. So you can mix and match resource limits as you like. Eg., you can only limit to 80% memory usage. Or, you can limit to both 80% memory and 90% processor power utilization. This means that if any of these resource limits are exceeded, new tasks will be queued.
 
-API: tasker (returned by require('tasker').create(options))
+API: tasker (returned by new Tasker())
 =======
 
 tasker.addTask(cb)
