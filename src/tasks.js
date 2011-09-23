@@ -42,15 +42,3 @@ var Task = exports.Task = function(id, cb, queued) {
     this.cb = cb;
     this.queued = queued;
 };
-
-/* executes the task */
-Task.prototype.execute = function(checkNext, onDone) {
-    
-    /* ensure that it is queued */
-    
-    /* execute callback, passing checkNext and onDone */
-    
-    /* remove task from queue */
-    
-    /* ensure task queued is set to false */
-};
