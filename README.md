@@ -29,7 +29,7 @@ tasker.addTask(cb)
 -------
 cb is a function which is called as soon as this task is to be executed:
 
-    function(onDone, checkNext) {
+    function(checkNext, onDone) {
         
         //execute our task here, eg. spawning a child process
         
@@ -92,7 +92,7 @@ Usage Example
     /* spawn 500 processes planned such that we never use too many resources */
     var child;
     for (var i = 0, il = 500; i < il; i++) {
-        tasker.addTask(function(onDone, checkNext) {
+        tasker.addTask(function(checkNext, onDone) {
         
             /* create and run process */
             child = exec('du -a /', function (error, stdout, stderr) {
