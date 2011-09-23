@@ -5,7 +5,7 @@
  */
 
 /* references and default settings */
-var EventEmitter    = require('eventemitter2'),
+var EventEmitter    = require('eventemitter2').EventEmitter2,
     util            = require('util'),
     tasks           = require('./tasks'),
     queue           = require('./queue'),
