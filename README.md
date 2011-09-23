@@ -68,10 +68,10 @@ All tasker functions are chainable.
 Planner events:
 ------
 
-* tasker.on('newTask', function(id) { }) : emitted when a new task has been added
-* tasker.on('taskStarted' function(id) { }) : emitted when a new task has started
-* tasker.on('taskQueued' function(id) { }) : emitted when a new task has been added to the queue
-* tasker.on('taskDone' function(id) { }) : emitted when a new task has finished
+* tasker.on('taskQueued' function(task) { }) : emitted when a new task has been added to the queue
+* tasker.on('taskStarted' function(task) { }) : emitted when a new task has started
+* tasker.on('taskRemoved', function(task) { }) : emitted when a task was removed from the queue, either because it has started or because removeTask was called
+* tasker.on('taskDone' function(task) { }) : emitted when a new task has finished
 * tasker.on('maxCpu' function(currentCpu) { }) : emitted when max cpu boundary has been exceeded
 * tasker.on('maxMem' function(currentMem) { }) : emitted when max mem boundary has been exceeded
 * tasker.on('maxTasks' function(currentAmount) { }) : emitted when max simultaneous tasks boundary has been exceeded
