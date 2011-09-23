@@ -43,6 +43,11 @@ TaskQueue.prototype.removeTask = function(task) {
     return null;
 };
 
+/* returns tasks at given index, or null if non-existant */
+TaskQueue.prototype.getFromIndex = function(index) {
+    return this.taskList[index];
+};
+
 /* generates unique id for a task */
 TaskQueue.prototype.generateTaskId = function() {
     return ++this.newTaskId;
