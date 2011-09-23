@@ -40,25 +40,8 @@ TaskScheduler.prototype.checkQueue = function() {
     /* call callback of first task, pass checkNext and onDone */
     var task = tasker.queue.getFromIndex(0);
     
-    /* function to be called to check next task */
-    var checkNext = function() {
-        
-        /* check the queue again */
-        this.checkQueue();
-    };
-    
-    /* function to be called when task finishes */
-    var onDone = function() {
-        
-        /* update running tasks */
-        scheduler.runningTasks--;
-        
-        /* task done */
-        tasker.emit('taskDone', task);
-    };
-    
     /* execute task */
-    this.executeTask(task, checkNext, onDone);
+    this.executeTask(task);
 };
 
 /* checks the queue after the poll rate interval */
@@ -115,6 +98,23 @@ TaskScheduler.prototype.executeTask = function(task, checkNext, onDone) {
         /* task removed */
         tasker.emit('taskRemoved', task);
     }
+    
+    /* function to be called to check next task */
+    var checkNext = function() {
+        
+        /* check the queue again */
+        scheduler.checkQueue();
+    };
+    
+    /* function to be called when task finishes */
+    var onDone = function() {
+        
+        /* update running tasks */
+        scheduler.runningTasks--;
+        
+        /* task done */
+        tasker.emit('taskDone', task);
+    };
     
     /* execute task */
     task.cb.apply(this, checkNext, onDone);
