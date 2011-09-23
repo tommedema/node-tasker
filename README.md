@@ -109,17 +109,17 @@ Usage Example
     
     /* listen to some useful events */
     tasker
-    .on('newTask', function(id) {
-        console.log('new task created: ' + id);
+    .on('taskStarted', function(task) {
+        console.log('new task started: %o', task);
     })
-    .on('taskStarted', function(id) {
-        console.log('new task started: ' + id);
+    .on('taskQueued', function(task) {
+        console.log('new task queued: %o', task);
     })
-    .on('taskQueued', function(id) {
-        console.log('new task queued: ' + id);
+    .on('taskRemoved', function(task) {
+        console.log('task removed from queue: %o', task);
     })
-    .on('taskDone', function(id) {
-        console.log('task finished: ' + id);
+    .on('taskDone', function(task) {
+        console.log('task finished: %o', task);
     })
     .on('maxCpu', function(cpu) {
         console.log('cpu limit exceeded: ' + cpu);
