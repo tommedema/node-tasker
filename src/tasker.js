@@ -28,9 +28,10 @@ var Tasker = exports.Tasker = function(options) {
     /* set defaults */
     if (!options.pollRate) options.pollRate = defaultPollRate;
     
-    /* set options and create empty state */
-    tasker.options  = options;
-    tasker.state    = {};
+    /* set options and initialize state */
+    tasker.options      = options;
+    tasker.queue        = new queue.TaskQueue();
+    tasker.tasksRunning = 0;
 };
 
 /* build prototype, inheriting from EventEmitter */
@@ -45,7 +46,9 @@ Tasker.prototype.getTasksQueued = queue.getTasksQueued;
 
 /* destructs the given tasker */
 function destructTasker() {
+    
+    /* function is part of Tasker prototype */
     var tasker = this;
     
-    
+    /* TODO: destruct tasker */
 }
