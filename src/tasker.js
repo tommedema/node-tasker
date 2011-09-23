@@ -5,7 +5,7 @@
  */
 
 /* references and default settings */
-var EventEmitter    = require('events').EventEmitter,
+var EventEmitter    = require('eventemitter2'),
     defaultPollRate = 500;
 
 /* creates a new tasker */
@@ -20,7 +20,7 @@ var create = exports.create = function(options) {
     /* set defaults */
     if (!options.pollRate) options.pollRate = defaultPollRate;
     
-    /* create tasker (an EventEmitter) */
+    /* create tasker (based on EventEmitter2) */
     var tasker = new EventEmitter();
     tasker.options = options;
     

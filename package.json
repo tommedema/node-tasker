@@ -3,7 +3,9 @@
     "version" : "0.1.0",
     "description" : "Tasker allows you to queue simultaneous and asynchronous tasks based on the system's CPU usage, and/or memory usage and/or the amount of tasks running simultaneously.",
     "main" : "./src/tasker.js",
-    "dependencies" : {},
+    "dependencies" : {
+        "eventemitter2" : "0.4.1"
+    },
     "devDependencies" : {
         "vows" : ">= 0.5.11 < 0.6"
     },
