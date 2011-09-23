@@ -1,3 +1,5 @@
+var os = require('os');
+
 /* returns amount of tasks currently running */
 var getTasksRunning = exports.getTasksRunning = function() {
     
@@ -33,11 +35,22 @@ TaskScheduler.prototype.checkQueue = function() {
     
     /* call callback of first task, pass checkNext and onDone */
     var task  = tasker.queue.getFromIndex(0);
-    //task.execute();
     
-    /* pass checkNext, onDone */
+    /* function to be called to check next task */
+    var checkNext = function() {
+        
+    };
+    
+    /* function to be called when task finishes */
+    var onDone = function() {
+        
+    };
+    
+    /* execute task */
+    this.executeTask(task, checkNext, onDone);
     
     /* clear interval until checkNext is called */
+    clearInterval(scheduler.interval);
     
     /* update running tasks on onDone */
     
@@ -71,10 +84,20 @@ TaskScheduler.prototype.shouldExecTask = function() {
 
 /* returns cpu usage as a percentage of total processing power (0-100) */
 TaskScheduler.prototype.getCpuUsage = function() {
-    
+    //TODO
 };
 
 /* returns memory usage as a percentage of total memory available (0-100) */
 TaskScheduler.prototype.getMemUsage = function() {
+    return os.freemem() / os.totalmem() * 100;
+};
+
+/* executes the given task, removing it from the queue */
+TaskScheduler.prototype.executeTask = function(task) {
     
+    /* this is the scheduler */
+    var scheduler   = this,
+        tasker      = scheduler.tasker;
+    
+    //TODO: execute task
 };
