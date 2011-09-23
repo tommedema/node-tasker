@@ -29,10 +29,10 @@ var Tasker = exports.Tasker = function(options) {
     if (!options.pollRate) options.pollRate = defaultPollRate;
     
     /* set options and initialize state */
-    tasker.options      = options;
-    tasker.queue        = new queue.TaskQueue();
-    tasker.tasksRunning = 0;
-    tasker.scheduler    = new scheduler.TaskScheduler(tasker);
+    this.options      = options;
+    this.queue        = new queue.TaskQueue();
+    this.tasksRunning = 0;
+    this.scheduler    = new scheduler.TaskScheduler(tasker);
 };
 
 /* build prototype, inheriting from EventEmitter */
