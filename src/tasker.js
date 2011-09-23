@@ -32,7 +32,11 @@ var Tasker = exports.Tasker = function(options) {
     tasker.options  = options;
     tasker.state    = {};
 };
+
+/* build prototype, inheriting from EventEmitter */
 util.inherits(Tasker, EventEmitter);
+
+/* public API */
 Tasker.prototype.destruct = destructTasker;
 Tasker.prototype.addTask = tasks.addTask;
 Tasker.prototype.removeTask = tasks.removeTask;
