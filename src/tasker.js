@@ -21,13 +21,16 @@ var create = exports.create = function(options) {
     if (!options.pollRate) options.pollRate = defaultPollRate;
     
     /* create tasker (based on EventEmitter2) */
-    var tasker = new EventEmitter();
-    tasker.options = options;
+    var tasker = Object.create(EventEmitter.prototype);
+    
+    /* set options and create empty state */
+    tasker.options          = options;
+    tasker.state            = {};
     
     /* public API */
-    tasker.destruct = function() {};
-    tasker.addTask = function() {};
-    tasker.removeTask = function() {};
-    tasker.getTasksRunning = function() {};
-    tasker.getTasksQueued = function() {};
+    tasker.destruct         = function() {};
+    tasker.addTask          = function() {};
+    tasker.removeTask       = function() {};
+    tasker.getTasksRunning  = function() {};
+    tasker.getTasksQueued   = function() {};
 };
