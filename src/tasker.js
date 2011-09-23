@@ -52,4 +52,8 @@ function destructTasker() {
     var tasker = this;
     
     /* TODO: destruct tasker */
+    
+    /* reference can be set to returned value */
+    return null;
+    
 }
