@@ -11,6 +11,14 @@ var EventEmitter    = require('eventemitter2'),
     scheduler       = require('./scheduler'),
     defaultPollRate = 500;
 
+/* create Tasker prototype */
+var Tasker = Object.create(EventEmitter.prototype);
+    Tasker.destruct = destructTasker;
+    Tasker.addTask = tasks.addTask;
+    Tasker.removeTask = tasks.removeTask;
+    Tasker.getTasksRunning = scheduler.getTasksRunning;
+    Tasker.getTasksQueued = queue.getTasksQueued;
+
 /* creates a new tasker */
 var create = exports.create = function(options) {
     
@@ -24,19 +32,15 @@ var create = exports.create = function(options) {
     /* set defaults */
     if (!options.pollRate) options.pollRate = defaultPollRate;
     
-    /* create tasker (based on EventEmitter2) */
-    var tasker = Object.create(EventEmitter.prototype);
+    /* create tasker */
+    var tasker = Object.create(Tasker);
     
     /* set options and create empty state */
-    tasker.options          = options;
-    tasker.state            = {};
+    tasker.options  = options;
+    tasker.state    = {};
     
-    /* public API */
-    tasker.destruct         = destructTasker;
-    tasker.addTask          = tasks.addTask;
-    tasker.removeTask       = tasks.removeTask;
-    tasker.getTasksRunning  = scheduler.getTasksRunning;
-    tasker.getTasksQueued   = queue.getTasksQueued;
+    /* return */
+    return tasker;
 };
 
 /* destructs the given tasker */
