@@ -21,9 +21,9 @@ var TaskQueue = exports.TaskQueue = function() {
 /* adds task to the queue, returns task */
 TaskQueue.prototype.addTask = function(cb) {
     
-    /* create task */
+    /* create task, set to queued */
     var id      = this.generateTaskId(),
-        task    = new tasks.Task(id, cb);
+        task    = new tasks.Task(id, cb, true);
     
     /* add to list */
     this.taskList.push(task);

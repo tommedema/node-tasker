@@ -36,7 +36,21 @@ var removeTask = exports.removeTask = function(task) {
 };
 
 /* Task object */
-var Task = exports.Task = function(id, cb) {
+var Task = exports.Task = function(id, cb, queued) {
+    if (typeof(queued) !== 'boolean') queued = false;
     this.id = id;
     this.cb = cb;
+    this.queued = queued;
+};
+
+/* executes the task */
+Task.prototype.execute = function(checkNext, onDone) {
+    
+    /* ensure that it is queued */
+    
+    /* execute callback, passing checkNext and onDone */
+    
+    /* remove task from queue */
+    
+    /* ensure task queued is set to false */
 };
