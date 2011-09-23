@@ -12,7 +12,7 @@ var EventEmitter    = require('eventemitter2'),
     defaultPollRate = 500;
 
 /* create Tasker prototype */
-var Tasker = Object.create(EventEmitter.prototype);
+var Tasker = exports.Tasker = Object.create(EventEmitter.prototype);
     Tasker.destruct = destructTasker;
     Tasker.addTask = tasks.addTask;
     Tasker.removeTask = tasks.removeTask;
