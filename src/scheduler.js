@@ -1,4 +1,5 @@
 /* returns amount of tasks currently running */
-var getTasksRunning = exports.getTasksRunning = function(tasker) {
+var getTasksRunning = exports.getTasksRunning = function() {
+    var tasker = this;
     
 };

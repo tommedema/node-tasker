@@ -32,14 +32,16 @@ var create = exports.create = function(options) {
     tasker.state            = {};
     
     /* public API */
-    tasker.destruct         = destructTasker.bind(this, tasker);
-    tasker.addTask          = tasks.addTask.bind(this, tasker);
-    tasker.removeTask       = tasks.removeTask.bind(this, tasker);
-    tasker.getTasksRunning  = scheduler.getTasksRunning.bind(this, tasker);
-    tasker.getTasksQueued   = queue.getTasksQueued.bind(this, tasker);
+    tasker.destruct         = destructTasker;
+    tasker.addTask          = tasks.addTask;
+    tasker.removeTask       = tasks.removeTask;
+    tasker.getTasksRunning  = scheduler.getTasksRunning;
+    tasker.getTasksQueued   = queue.getTasksQueued;
 };
 
 /* destructs the given tasker */
-function destructTasker(tasker) {
+function destructTasker() {
+    var tasker = this;
+    
     
 }
