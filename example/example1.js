@@ -25,8 +25,8 @@ tasker
 .on('maxCpu', function(cpu) {
     console.log('cpu limit exceeded: ' + cpu);
 })
-.on('maxMem', function(mem) {
-    console.log('mem limit exceeded: ' + mem);
+.on('maxMem', function(memPerc, memUsed, memTotal) {
+    console.log('mem limit exceeded: %n, %n/%n', memPerc, memUsed, memTotal);
 })
 .on('maxTasks', function(amount) {
     console.log('max tasks running: ' + amount);
