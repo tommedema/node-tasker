@@ -31,11 +31,11 @@ TaskScheduler.prototype.checkQueue = function() {
     var scheduler   = this,
         tasker      = scheduler.tasker;
     
-    /* check if queue is populated */
-    if (!tasker.getTasksQueued()) return checkQueueSoon();
+    /* check if queue is populated, if not check queue soon */
+    if (!tasker.getTasksQueued()) return scheduler.checkQueueSoon();
     
-    /* check CPU, MEM and TasksRunning */
-    if (!this.shouldExecTask()) return checkQueueSoon();
+    /* check CPU, MEM and TasksRunning, or check queue again soon */
+    if (!scheduler.shouldExecTask()) return scheduler.checkQueueSoon();
     
     /* call callback of first task, pass checkNext and onDone */
     var task = tasker.queue.getFromIndex(0);
@@ -46,7 +46,7 @@ TaskScheduler.prototype.checkQueue = function() {
 
 /* checks the queue after the poll rate interval */
 TaskScheduler.prototype.checkQueueSoon = function() {
-    setTimeout(checkQueue.bind(this), this.tasker.options.pollRate);
+    setTimeout(this.checkQueue.bind(this), this.tasker.options.pollRate);
 };
 
 /* returns whether our resources and options indicate that we should execute new tasks (true/false) */
@@ -58,31 +58,24 @@ TaskScheduler.prototype.shouldExecTask = function() {
         options     = tasker.options;
     
     /* check each resource */
-    if (options.maxCpu && getCpuUsage() > options.maxCpu) {
-        tasker.emit('maxCpu');
+    var cpuUsage = getCpuUsage();
+    if (options.maxCpu && cpuUsage > options.maxCpu) {
+        tasker.emit('maxCpu', cpuUsage);
         return false;
     }
-    if (options.maxMem && getMemUsage() > options.maxMem) {
-        tasker.emit('maxMem');
+    var memUsage = getMemUsage();
+    if (options.maxMem && memUsage > options.maxMem) {
+        tasker.emit('maxMem', memUsage);
         return false;
     }
-    if (options.maxTasks && tasker.getTasksRunning() > options.maxTasks) {
-        tasker.emit('maxTasks');
+    var tasksRunning = tasker.getTasksRunning();
+    if (options.maxTasks && tasksRunning > options.maxTasks) {
+        tasker.emit('maxTasks', tasksRunning);
         return false;
     }
     
     /* we should execute new tasks */
     return true;
-};
-
-/* returns cpu usage as a percentage of total processing power (0-100) */
-TaskScheduler.prototype.getCpuUsage = function() {
-    return cpu.getCpuUsage();
-};
-
-/* returns memory usage as a percentage of total memory available (0-100) */
-TaskScheduler.prototype.getMemUsage = function() {
-    return os.freemem() / os.totalmem() * 100;
 };
 
 /* executes the given task, removing it from the queue */
@@ -122,4 +115,14 @@ TaskScheduler.prototype.executeTask = function(task, checkNext, onDone) {
     
     /* task started */
     tasker.emit('taskStarted', task);
+};
+
+/* returns cpu usage as a percentage of total processing power (0-100) */
+function getCpuUsage() {
+    return cpu.getCpuUsage();
+};
+
+/* returns memory usage as a percentage of total memory available (0-100) */
+function getMemUsage() {
+    return os.freemem() / os.totalmem() * 100;
 };
