@@ -1,7 +1,7 @@
 var exec = require('child_process').exec,
-    tasker;
+    Tasker = require('../src/tasker').Tasker;
 
-tasker = new require('../src/tasker').Tasker({
+var tasker = new Tasker({
     maxCpu: 40 /* queue new tasks when cpu is used over 90% */
   , maxMem: 40 /* queue new tasks when more than 80% of total memory is consumed */
   , maxTasks: 200 /* queue new tasks when more than 200 simultaneous tasks are running */
