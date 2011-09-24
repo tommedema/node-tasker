@@ -64,8 +64,8 @@ TaskScheduler.prototype.shouldExecTask = function() {
         return false;
     }
     var memUsage = getMemUsage();
-    if (options.maxMem && memUsage > options.maxMem) {
-        tasker.emit('maxMem', memUsage);
+    if (options.maxMem && memUsage.percentage > options.maxMem) {
+        tasker.emit('maxMem', memUsage.percentage, memUsage.usage, memUsage.total);
         return false;
     }
     var tasksRunning = tasker.getTasksRunning();
@@ -124,5 +124,13 @@ function getCpuUsage() {
 
 /* returns memory usage as a percentage of total memory available (0-100) */
 function getMemUsage() {
-    return os.freemem() / os.totalmem() * 100;
+    var total   = os.totalmem(),
+        usage   = total - os.freemem(),
+        perc    = usage / total * 100;
+
+    return {
+        usage       : usage
+      , total       : total
+      , percentage  : perc
+    };
 };
