@@ -8,24 +8,6 @@ var tasker = new Tasker({
   , pollRate: 500 /* if the queue is populated, check for resource usage changes every 500ms */
 });
 
-/* spawn 500 processes planned such that we never use too many resources */
-var child;
-for (var i = 0, il = 50; i < il; i++) {
-    tasker.addTask(function(checkNext, onDone) {
-
-        /* create and run process */
-        child = exec('du -a /', function (error, stdout, stderr) {
-
-            /* run onDone on end (success or failure) */
-            onDone();
-        });
-
-        /* check next when initialized */
-        checkNext();            
-
-    });
-}
-
 /* listen to some useful events */
 tasker
 .on('taskStarted', function(task) {
@@ -49,3 +31,21 @@ tasker
 .on('maxTasks', function(amount) {
     console.log('max tasks running: ' + amount);
 });
+
+/* spawn 500 processes planned such that we never use too many resources */
+var child;
+for (var i = 0, il = 50; i < il; i++) {
+    tasker.addTask(function(checkNext, onDone) {
+
+        /* create and run process */
+        child = exec('du -a /', function (error, stdout, stderr) {
+
+            /* run onDone on end (success or failure) */
+            onDone();
+        });
+
+        /* check next when initialized */
+        checkNext();            
+
+    });
+}
