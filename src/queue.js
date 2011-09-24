@@ -36,7 +36,7 @@ TaskQueue.prototype.addTask = function(cb) {
 TaskQueue.prototype.removeTask = function(task) {
     for (var i = 0, il = this.taskList.length; i < il; i++) {
         if (this.taskList[i] === task) {
-            taskList.splice(i, 1);
+            this.taskList.splice(i, 1);
             return task;
         }
     }
